@@ -17,6 +17,13 @@ namespace Reversi.Core
 			new GameBoardCaptureDirection(-1, -1),
 		};
 
+		private GameBoardCaptureDirection (int x, int y)
+			: this ()
+		{
+			X = x;
+			Y = y;
+		}
+
 		#endregion
 
 		public static IEnumerable<GameBoardCaptureDirection> ValidDirections
@@ -28,12 +35,5 @@ namespace Reversi.Core
 		}
 		public int X { get; private set; }
 		public int Y { get; private set; }
-
-		public GameBoardCaptureDirection (int x, int y)
-			: this ()
-		{
-			X = x;
-			Y = y;
-		}
 	}
 }

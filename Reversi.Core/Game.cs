@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Reversi.Core
@@ -66,6 +67,26 @@ namespace Reversi.Core
 			}
 			return Move (moves);
 		}
+		private Task<IList<GameBoardSpace>> _ResetAsync (int turnCount)
+		{
+			Contract.Assert (turnCount >= 0 && turnCount <= MoveStack.Count);
+			Contract.Assert (turnCount != Moves.Count);
+
+			lock (_SyncObject) {
+				IList<GameBoardSpace> moves;
+				if (turnCount < Moves.Count) {
+					Board = new GameBoard (Board.Size);
+					moves = _Moves.Take (turnCount).ToList ();
+					_Moves.Clear ();
+				} else {
+					moves = _MoveStack
+						.Skip (_Moves.Count)
+						.Take (turnCount - _Moves.Count).ToList ();
+				}
+				return MoveAsync (moves);
+			}
+		}
+
 
 		#endregion
 
@@ -100,6 +121,16 @@ namespace Reversi.Core
 			_SyncMoveStack (boardSpace);
 			return changedBoardSpaces;
 		}
+		public Task<IList<GameBoardSpace>> MoveAsync (GameBoardSpace boardSpace)
+		{
+			lock (_SyncObject) {
+				return Task.Run (() => {
+					var changedSpaces = _Move (boardSpace);
+					_SyncMoveStack (boardSpace);
+					return changedSpaces;
+				});
+			}
+		}
 		public IList<GameBoardSpace> Move (IEnumerable<GameBoardSpace> boardSpaces)
 		{
 			var boardSpacesList = boardSpaces.ToList ();
@@ -111,17 +142,42 @@ namespace Reversi.Core
 			}
 			return Move (boardSpacesList.Last ());
 		}
+		public Task<IList<GameBoardSpace>> MoveAsync (IEnumerable<GameBoardSpace> boardSpaces)
+		{
+			return Task.Run (async () => {
+				var boardSpacesList = boardSpaces.ToList ();
+				if (boardSpacesList.Count == 0) {
+					return new List<GameBoardSpace> ();
+				}
+				foreach (var boardSpace in boardSpacesList.Take (boardSpacesList.Count - 1)) {
+					await MoveAsync (boardSpace);
+				}
+				return await MoveAsync (boardSpacesList.Last ());
+			});
+		}
 		public IList<GameBoardSpace> Pass ()
 		{
 			return Move ((GameBoardSpace)null);
+		}
+		public Task<IList<GameBoardSpace>> PassAsync ()
+		{
+			return MoveAsync ((GameBoardSpace)null);
 		}
 		public IList<GameBoardSpace> Undo ()
 		{
 			return _Reset (_Moves.Count - 1);
 		}
+		public Task<IList<GameBoardSpace>> UndoAsync ()
+		{
+			return _ResetAsync (_Moves.Count - 1);
+		}
 		public IList<GameBoardSpace> Redo ()
 		{
 			return _Reset (_Moves.Count + 1);
+		}
+		public Task<IList<GameBoardSpace>> RedoAsync ()
+		{
+			return _ResetAsync (_Moves.Count + 1);
 		}
 	}
 }

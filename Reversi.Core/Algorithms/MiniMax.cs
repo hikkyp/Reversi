@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Reversi.Core.Algorithms
 {
@@ -54,6 +56,32 @@ namespace Reversi.Core.Algorithms
 				yield return getMoveEvaluation (null);
 			}
 		}
+		private IEnumerable<MiniMaxEvaluation<TBoardSpace>> _GetMoveEvaluationsFirst (TBoard board, TPlayer player, int searchDepth, CancellationToken? cancellationToken, int maxValue = int.MaxValue)
+		{
+			var minValue = -int.MaxValue;
+			var validMoves = GetValidMoves (board, player).ToArray ();
+			var getMoveEvaluation = new Func<TBoardSpace, MiniMaxEvaluation<TBoardSpace>> (move => {
+				return new MiniMaxEvaluation<TBoardSpace> {
+					Space = move,
+					ScoreValue = _GetMoveValue (board, move, player, searchDepth, -minValue, cancellationToken),
+				};
+			});
+			var moveEvaluations = new ConcurrentStack<MiniMaxEvaluation<TBoardSpace>> ();
+			if (validMoves.Any ()) {
+				Parallel.ForEach(validMoves.Select (move => getMoveEvaluation (move)), (moveEvaluation, loopState) => {
+					if (moveEvaluation.ScoreValue > maxValue) {
+						moveEvaluations.Push (moveEvaluation);
+						loopState.Stop ();
+					} else if (moveEvaluation.ScoreValue >= minValue) {
+						minValue = Math.Max (moveEvaluation.ScoreValue, minValue);
+						moveEvaluations.Push (moveEvaluation);
+					}
+				});
+			} else {
+				moveEvaluations.Push (getMoveEvaluation (null));
+			}
+			return moveEvaluations.ToList();
+		}
 
 		#endregion
 
@@ -72,7 +100,7 @@ namespace Reversi.Core.Algorithms
 			Contract.Requires (FlipPlayer != null);
 			Contract.Assert (searchDepth > 0);
 
-			var evaluations = _GetMoveEvaluations (board, player, searchDepth, cancellationToken).ToArray ();
+			var evaluations = _GetMoveEvaluationsFirst (board, player, searchDepth, cancellationToken).ToArray ();
 			var bestValue = evaluations.Max (evaluation => evaluation.ScoreValue);
 			var bestMoves = (
 				from evaluation in evaluations

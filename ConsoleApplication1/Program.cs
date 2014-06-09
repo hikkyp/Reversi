@@ -24,7 +24,7 @@ namespace ConsoleApplication1
 			var printBuffer = "";
 
 			GameBoardSpace newMove;
-			if (moves != null) {
+			if (moves != null && moves.Count > 0) {
 				newMove = moves.First ();
 			} else {
 				newMove = new GameBoardSpace (int.MaxValue, int.MaxValue);

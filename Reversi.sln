@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi", "Reversi\Reversi.csproj", "{E95ED220-9D89-40E3-95B9-A48318FF2A18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi.Core", "Reversi.Core\Reversi.Core.csproj", "{E3EDE4AF-6587-49A2-AEE9-7DDCCB95D97A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E95ED220-9D89-40E3-95B9-A48318FF2A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E95ED220-9D89-40E3-95B9-A48318FF2A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E95ED220-9D89-40E3-95B9-A48318FF2A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E95ED220-9D89-40E3-95B9-A48318FF2A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3EDE4AF-6587-49A2-AEE9-7DDCCB95D97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3EDE4AF-6587-49A2-AEE9-7DDCCB95D97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3EDE4AF-6587-49A2-AEE9-7DDCCB95D97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3EDE4AF-6587-49A2-AEE9-7DDCCB95D97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

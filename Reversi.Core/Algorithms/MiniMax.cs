@@ -56,7 +56,7 @@ namespace Reversi.Core.Algorithms
 				yield return getMoveEvaluation (null);
 			}
 		}
-		private IEnumerable<MiniMaxEvaluation<TBoardSpace>> _GetMoveEvaluationsFirst (TBoard board, TPlayer player, int searchDepth, CancellationToken? cancellationToken, int maxValue = int.MaxValue)
+		private IEnumerable<MiniMaxEvaluation<TBoardSpace>> _GetMoveEvaluationsParallel (TBoard board, TPlayer player, int searchDepth, CancellationToken? cancellationToken, int maxValue = int.MaxValue)
 		{
 			var minValue = -int.MaxValue;
 			var validMoves = GetValidMoves (board, player).ToArray ();
@@ -68,7 +68,8 @@ namespace Reversi.Core.Algorithms
 			});
 			var moveEvaluations = new ConcurrentStack<MiniMaxEvaluation<TBoardSpace>> ();
 			if (validMoves.Any ()) {
-				Parallel.ForEach(validMoves.Select (move => getMoveEvaluation (move)), (moveEvaluation, loopState) => {
+				Parallel.ForEach (validMoves, (validMove, loopState) => {
+					var moveEvaluation = getMoveEvaluation (validMove);
 					if (moveEvaluation.ScoreValue > maxValue) {
 						moveEvaluations.Push (moveEvaluation);
 						loopState.Stop ();
@@ -100,7 +101,9 @@ namespace Reversi.Core.Algorithms
 			Contract.Requires (FlipPlayer != null);
 			Contract.Assert (searchDepth > 0);
 
-			var evaluations = _GetMoveEvaluationsFirst (board, player, searchDepth, cancellationToken).ToArray ();
+			var evaluations = searchDepth > 2
+				? _GetMoveEvaluationsParallel (board, player, searchDepth, cancellationToken).ToArray ()
+				: _GetMoveEvaluations (board, player, searchDepth, cancellationToken).ToArray ();
 			var bestValue = evaluations.Max (evaluation => evaluation.ScoreValue);
 			var bestMoves = (
 				from evaluation in evaluations

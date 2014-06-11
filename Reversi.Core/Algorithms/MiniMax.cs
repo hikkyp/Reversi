@@ -26,7 +26,9 @@ namespace Reversi.Core.Algorithms
 				return GetBoardValue (board, player);
 			}
 			var opponent = FlipPlayer (player);
-			var moveEvaluations = _GetMoveEvaluations (board, opponent, searchDepth, cancellationToken, maxValue);
+			var moveEvaluations = searchDepth >= 2
+				? _GetMoveEvaluationsParallel (board, opponent, searchDepth, cancellationToken, maxValue)
+				: _GetMoveEvaluations (board, opponent, searchDepth, cancellationToken, maxValue);
 			return -moveEvaluations.Max (moveEvaluation => moveEvaluation.ScoreValue);
 		}
 		private IEnumerable<MiniMaxEvaluation<TBoardSpace>> _GetMoveEvaluations (TBoard board, TPlayer player, int searchDepth, CancellationToken? cancellationToken, int maxValue = int.MaxValue)
@@ -101,7 +103,7 @@ namespace Reversi.Core.Algorithms
 			Contract.Requires (FlipPlayer != null);
 			Contract.Assert (searchDepth > 0);
 
-			var evaluations = searchDepth > 2
+			var evaluations = searchDepth >= 2
 				? _GetMoveEvaluationsParallel (board, player, searchDepth, cancellationToken).ToArray ()
 				: _GetMoveEvaluations (board, player, searchDepth, cancellationToken).ToArray ();
 			var bestValue = evaluations.Max (evaluation => evaluation.ScoreValue);

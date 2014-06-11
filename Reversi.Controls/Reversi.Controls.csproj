@@ -4,18 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E95ED220-9D89-40E3-95B9-A48318FF2A18}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{8F6AAB09-7451-4F9B-ACA0-43C0FF66A4BE}</ProjectGuid>
+    <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Reversi</RootNamespace>
-    <AssemblyName>Reversi</AssemblyName>
+    <RootNamespace>Reversi.Controls</RootNamespace>
+    <AssemblyName>Reversi.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +24,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -49,25 +47,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Compile Include="Converters\StringUpperConverter.cs" />
+    <Compile Include="Converters\SymbolToStringConverter.cs" />
+    <Compile Include="SlipButtonSlipDirection.cs" />
+    <Compile Include="SlipButtonSymbol.cs" />
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+    </Page>
+    <Compile Include="SlipButton.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Views\GameSettingsPage.xaml.cs">
-      <DependentUpon>GameSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\GameWindow.xaml.cs">
-      <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\BindableBase.cs" />
-    <Compile Include="Common\DelegateCommand.cs" />
-    <Compile Include="Common\DelegateCommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -90,37 +82,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Reversi.Controls\Reversi.Controls.csproj">
-      <Project>{8f6aab09-7451-4f9b-aca0-43c0ff66a4be}</Project>
-      <Name>Reversi.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reversi.Core\Reversi.Core.csproj">
-      <Project>{e3ede4af-6587-49a2-aee9-7ddccb95d97a}</Project>
-      <Name>Reversi.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GameSettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GameWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

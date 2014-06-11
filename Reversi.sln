@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi.Core", "Reversi.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi.Controls", "Reversi.Controls\Reversi.Controls.csproj", "{8F6AAB09-7451-4F9B-ACA0-43C0FF66A4BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4249906-DE49-4CD3-9723-BEEF7EE6BDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F6AAB09-7451-4F9B-ACA0-43C0FF66A4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F6AAB09-7451-4F9B-ACA0-43C0FF66A4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F6AAB09-7451-4F9B-ACA0-43C0FF66A4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F6AAB09-7451-4F9B-ACA0-43C0FF66A4BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

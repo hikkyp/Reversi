@@ -1,0 +1,105 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Reversi.Controls"
+	xmlns:converters="clr-namespace:Reversi.Controls.Converters">
+
+	<converters:StringUpperConverter x:Key="StringUpperConverter" />
+	<converters:SymbolToStringConverter x:Key="SymbolToStringConverter" />
+	<Color x:Key="LightBackgroundColor">#3F000000</Color>
+	<Color x:Key="DarkBackgroundColor">#19000000</Color>
+	<Color x:Key="LightForegroundColor">#FFFFFFFF</Color>
+	<Color x:Key="DarkForegroundColor">#7F000000</Color>
+
+	<!-- SlipButton -->
+	<Style TargetType="{x:Type local:SlipButton}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type local:SlipButton}">
+					<Canvas x:Name="Container" ClipToBounds="True">
+						<Canvas.Background>
+							<SolidColorBrush Color="{StaticResource LightBackgroundColor}" />
+						</Canvas.Background>
+						<Border x:Name="Caption">
+							<Border.BorderBrush>
+								<SolidColorBrush Color="{StaticResource LightBackgroundColor}" />
+							</Border.BorderBrush>
+							<Grid x:Name="CaptionGroup">
+								<Grid x:Name="CaptionImage" Width="{Binding ActualWidth, ElementName=Container}" Height="{Binding ActualHeight, ElementName=Container}">
+									<TextBlock
+										x:Name="CaptionImageBody"
+										Text="{TemplateBinding Symbol, Converter={StaticResource SymbolToStringConverter}}"
+										FontSize="{TemplateBinding SymbolSize}"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+										FontFamily="{TemplateBinding FontFamily}">
+										<TextBlock.Foreground>
+											<SolidColorBrush Color="{StaticResource LightForegroundColor}" />
+										</TextBlock.Foreground>
+									</TextBlock>
+								</Grid>
+								<Grid x:Name="CaptionLabel" Width="{Binding ActualWidth, ElementName=Container}" Height="{Binding ActualHeight, ElementName=Container}">
+									<TextBlock
+										x:Name="CaptionLabelBody"
+										Text="{TemplateBinding Content, Converter={StaticResource StringUpperConverter}}"
+										FontSize="{TemplateBinding FontSize}"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center">
+										<TextBlock.Foreground>
+											<SolidColorBrush Color="{StaticResource LightForegroundColor}" />
+										</TextBlock.Foreground>
+									</TextBlock>
+								</Grid>
+							</Grid>
+						</Border>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal">
+									<Storyboard>
+										<ColorAnimationUsingKeyFrames x:Name="NormalContainerBackgroundAnimation" Duration="0:0:0.1" Storyboard.TargetName="Container" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
+											<EasingColorKeyFrame Value="{StaticResource LightBackgroundColor}" KeyTime="100%" />
+										</ColorAnimationUsingKeyFrames>
+										<DoubleAnimationUsingKeyFrames x:Name="NormalCaptionHorizontalSlipAniamtion" Duration="0:0:0.2" Storyboard.TargetName="Caption" Storyboard.TargetProperty="(Canvas.Left)" />
+										<DoubleAnimationUsingKeyFrames x:Name="NormalCaptionVerticalSlipAniamtion" Duration="0:0:0.2" Storyboard.TargetName="Caption" Storyboard.TargetProperty="(Canvas.Top)" />
+										<ThicknessAnimationUsingKeyFrames x:Name="NormalCaptionDropShadowAnimation" Duration="0:0:0.05" Storyboard.TargetName="Caption" Storyboard.TargetProperty="BorderThickness">
+											<EasingThicknessKeyFrame Value="0,0,0,0" KeyTime="100%" />
+										</ThicknessAnimationUsingKeyFrames>
+										<ColorAnimationUsingKeyFrames x:Name="NormalCaptionLabelBodyForegroundAnimation" Duration="0:0:0.1" Storyboard.TargetName="CaptionImageBody" Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)">
+											<EasingColorKeyFrame Value="{StaticResource LightForegroundColor}" KeyTime="100%" />
+										</ColorAnimationUsingKeyFrames>
+										<ColorAnimationUsingKeyFrames x:Name="NormalCaptionImageBodyForegroundAnimation" Duration="0:0:0.1" Storyboard.TargetName="CaptionImageBody" Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)">
+											<EasingColorKeyFrame Value="{StaticResource LightForegroundColor}" KeyTime="100%" />
+										</ColorAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="MouseOver">
+									<Storyboard>
+										<DoubleAnimationUsingKeyFrames x:Name="MouseOverCaptionHorizontalSlipAniamtion" Duration="0:0:0.2" Storyboard.TargetName="Caption" Storyboard.TargetProperty="(Canvas.Left)" />
+										<DoubleAnimationUsingKeyFrames x:Name="MouseOverCaptionVerticalSlipAniamtion" Duration="0:0:0.2" Storyboard.TargetName="Caption" Storyboard.TargetProperty="(Canvas.Top)" />
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Pressed">
+									<Storyboard>
+										<ColorAnimationUsingKeyFrames x:Name="PressedContainerBackgroundAnimation" Duration="0:0:0.1" Storyboard.TargetName="Container" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
+											<EasingColorKeyFrame Value="{StaticResource DarkBackgroundColor}" KeyTime="100%" />
+										</ColorAnimationUsingKeyFrames>
+										<ThicknessAnimationUsingKeyFrames x:Name="PressedCaptionDropShadowAnimation" Duration="0:0:0.05" Storyboard.TargetName="Caption" Storyboard.TargetProperty="BorderThickness">
+											<EasingThicknessKeyFrame Value="0,3,0,0" KeyTime="100%" />
+										</ThicknessAnimationUsingKeyFrames>
+										<ColorAnimationUsingKeyFrames x:Name="PressedCaptionLabelBodyForegroundAnimation" Duration="0:0:0.1" Storyboard.TargetName="CaptionImageBody" Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)">
+											<EasingColorKeyFrame Value="{StaticResource DarkForegroundColor}" KeyTime="100%" />
+										</ColorAnimationUsingKeyFrames>
+										<ColorAnimationUsingKeyFrames x:Name="PressedCaptionImageBodyForegroundAnimation" Duration="0:0:0.1" Storyboard.TargetName="CaptionImageBody" Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)">
+											<EasingColorKeyFrame Value="{StaticResource DarkForegroundColor}" KeyTime="100%" />
+										</ColorAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+					</Canvas>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+</ResourceDictionary>

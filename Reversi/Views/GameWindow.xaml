@@ -1,0 +1,26 @@
+﻿<Window x:Class="Reversi.Views.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:Reversi.Controls;assembly=Reversi.Controls"
+        Title="Reversi" Height="768" Width="1024" MinWidth="1024" MinHeight="768" ResizeMode="NoResize" FontFamily="Segoe UI Semibold">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="80"/>
+		</Grid.RowDefinitions>
+		<Frame Grid.Row="1" Source="/Reversi;component/Views/GameSettingsPage.xaml"/>
+		<Border Background="Black">
+			<TextBlock TextWrapping="Wrap" Text="Reversi" FontSize="48" VerticalAlignment="Center" Foreground="White" Margin="80,0"/>
+		</Border>
+		<Border Grid.Row="2">
+			<Grid Background="#FF668561">
+				<controls:SlipButton Content="Exit" HorizontalAlignment="Right" Width="200" Margin="0,16,799,14" Foreground="#FFD8FFA6" Symbol="HeavyBallotX" SymbolSize="24" FontSize="16" SlipDirection="TopToBottom"/>
+				<controls:SlipButton Content="Leader Board" HorizontalAlignment="Right" Width="200" Margin="0,16,573,14" Foreground="#FFD8FFA6" Symbol="BlackChessKing" SymbolSize="24" FontSize="16"/>
+				<controls:SlipButton Content="Continue" HorizontalAlignment="Right" Width="200" Margin="0,16,317,14" Background="#FF8BB26B" Foreground="#FFD8FFA6" SymbolSize="24" FontSize="16" SlipDirection="BottomToTop" Symbol="BlackRightwardsArrow"/>
+				<controls:SlipButton Content="New Game" HorizontalAlignment="Right" Width="200" Margin="0,16,89,14" Background="#FF8BB26B" Foreground="#FFD8FFA6" SymbolSize="24" FontSize="16" SlipDirection="RightToLeft" Symbol="FlagInHole"/>
+			</Grid>
+		</Border>
+
+	</Grid>
+</Window>

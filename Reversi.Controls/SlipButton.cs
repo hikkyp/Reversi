@@ -10,9 +10,9 @@ namespace Reversi.Controls
 		#region 非表示メンバ
 
 		private Canvas _Container;
-		private Border _Caption;
+		private Grid _Caption;
 		private Grid _CaptionGroup;
-		private Grid _CaptionImage;
+		private Border _CaptionImage;
 		private Grid _CaptionLabel;
 
 		static SlipButton ()
@@ -29,36 +29,36 @@ namespace Reversi.Controls
 			Grid.SetColumn (_CaptionImage, 0);
 			Grid.SetRow (_CaptionLabel, 0);
 			Grid.SetColumn (_CaptionImage, 0);
-			_CaptionGroup.RowDefinitions.Clear ();
-			_CaptionGroup.ColumnDefinitions.Clear ();
+			_Caption.RowDefinitions.Clear ();
+			_Caption.ColumnDefinitions.Clear ();
 
 			// 行・列定義を構成して、
 			// _Image と _Label のグリッド内配置を決定する
 			switch (slipDirection) {
 			case SlipButtonSlipDirection.TopToBottom: {
-					_CaptionGroup.RowDefinitions.Add (new RowDefinition ());
-					_CaptionGroup.RowDefinitions.Add (new RowDefinition ());
+					_Caption.RowDefinitions.Add (new RowDefinition ());
+					_Caption.RowDefinitions.Add (new RowDefinition ());
 					Grid.SetRow (_CaptionLabel, 1);
 					Grid.SetRow (_CaptionImage, 0);
 					break;
 				}
 			case SlipButtonSlipDirection.LeftToRight: {
-					_CaptionGroup.ColumnDefinitions.Add (new ColumnDefinition ());
-					_CaptionGroup.ColumnDefinitions.Add (new ColumnDefinition ());
+					_Caption.ColumnDefinitions.Add (new ColumnDefinition ());
+					_Caption.ColumnDefinitions.Add (new ColumnDefinition ());
 					Grid.SetColumn (_CaptionLabel, 1);
 					Grid.SetColumn (_CaptionImage, 0);
 					break;
 				}
 			case SlipButtonSlipDirection.BottomToTop: {
-					_CaptionGroup.RowDefinitions.Add (new RowDefinition ());
-					_CaptionGroup.RowDefinitions.Add (new RowDefinition ());
+					_Caption.RowDefinitions.Add (new RowDefinition ());
+					_Caption.RowDefinitions.Add (new RowDefinition ());
 					Grid.SetRow (_CaptionLabel, 0);
 					Grid.SetRow (_CaptionImage, 1);
 					break;
 				}
 			case SlipButtonSlipDirection.RightToLeft: {
-					_CaptionGroup.ColumnDefinitions.Add (new ColumnDefinition ());
-					_CaptionGroup.ColumnDefinitions.Add (new ColumnDefinition ());
+					_Caption.ColumnDefinitions.Add (new ColumnDefinition ());
+					_Caption.ColumnDefinitions.Add (new ColumnDefinition ());
 					Grid.SetColumn (_CaptionLabel, 0);
 					Grid.SetColumn (_CaptionImage, 1);
 					break;
@@ -67,6 +67,8 @@ namespace Reversi.Controls
 
 			// コンテナの各ビジュアルステートグループに対して、
 			// アニメーションを構成する
+			var captionLeft = -ActualWidth;
+			var captionTop = -ActualHeight;
 			foreach (var visualStateGroup in (ObservableCollection<VisualStateGroup>)_Container.GetValue (VisualStateManager.VisualStateGroupsProperty)) {
 				if (visualStateGroup.Name == "CommonStates") {
 					foreach (var visualStateObject in visualStateGroup.States) {
@@ -82,27 +84,21 @@ namespace Reversi.Controls
 									switch (slipDirection) {
 									case SlipButtonSlipDirection.TopToBottom: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetTop (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.LeftToRight: {
-											var left = -ActualWidth;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (left, KeyTime.FromPercent (1)));
-											Canvas.SetLeft (_Caption, left);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionLeft, KeyTime.FromPercent (1)));
 											_Caption.BeginAnimation (Canvas.LeftProperty, doubleAnimation);
 											break;
 										}
 									case SlipButtonSlipDirection.BottomToTop: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetTop (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.RightToLeft: {
-											var left = 0.0;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (left, KeyTime.FromPercent (1)));
-											Canvas.SetLeft (_Caption, left);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
 											_Caption.BeginAnimation (Canvas.LeftProperty, doubleAnimation);
 											break;
 										}
@@ -118,29 +114,23 @@ namespace Reversi.Controls
 									var doubleAnimation = (DoubleAnimationUsingKeyFrames)animation;
 									switch (slipDirection) {
 									case SlipButtonSlipDirection.TopToBottom: {
-											var top = -ActualHeight;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (top, KeyTime.FromPercent (1)));
-											Canvas.SetTop (_Caption, top);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionTop, KeyTime.FromPercent (1)));
 											_Caption.BeginAnimation (Canvas.TopProperty, doubleAnimation);
 											break;
 										}
 									case SlipButtonSlipDirection.LeftToRight: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetLeft (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.BottomToTop: {
-											var top = 0.0;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (top, KeyTime.FromPercent (1)));
-											Canvas.SetTop (_Caption, top);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
 											_Caption.BeginAnimation (Canvas.TopProperty, doubleAnimation);
 											break;
 										}
 									case SlipButtonSlipDirection.RightToLeft: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetLeft (_Caption, 0);
 											break;
 										}
 									}
@@ -156,26 +146,24 @@ namespace Reversi.Controls
 									switch (slipDirection) {
 									case SlipButtonSlipDirection.TopToBottom: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetTop (_Caption, 0);
+											Canvas.SetLeft (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.LeftToRight: {
-											var left = 0.0;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (left, KeyTime.FromPercent (1)));
-											Canvas.SetLeft (_Caption, left);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
+											Canvas.SetLeft (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.BottomToTop: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetTop (_Caption, 0);
+											Canvas.SetLeft (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.RightToLeft: {
-											var left = -ActualWidth;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (left, KeyTime.FromPercent (1)));
-											Canvas.SetLeft (_Caption, left);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionLeft, KeyTime.FromPercent (1)));
+											Canvas.SetLeft (_Caption, captionLeft);
 											break;
 										}
 									}
@@ -190,27 +178,25 @@ namespace Reversi.Controls
 									var doubleAnimation = (DoubleAnimationUsingKeyFrames)animation;
 									switch (slipDirection) {
 									case SlipButtonSlipDirection.TopToBottom: {
-											var top = 0.0;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (top, KeyTime.FromPercent (1)));
-											Canvas.SetTop (_Caption, top);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
+											Canvas.SetTop (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.LeftToRight: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetLeft (_Caption, 0);
+											Canvas.SetTop (_Caption, 0);
 											break;
 										}
 									case SlipButtonSlipDirection.BottomToTop: {
-											var top = -ActualHeight;
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (top, KeyTime.FromPercent (1)));
-											Canvas.SetTop (_Caption, top);
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionTop, KeyTime.FromPercent (1)));
+											Canvas.SetTop (_Caption, captionTop);
 											break;
 										}
 									case SlipButtonSlipDirection.RightToLeft: {
 											doubleAnimation.KeyFrames.Clear ();
-											Canvas.SetLeft (_Caption, 0);
+											Canvas.SetTop (_Caption, 0);
 											break;
 										}
 									}
@@ -218,7 +204,6 @@ namespace Reversi.Controls
 								}
 
 							#endregion
-
 							}
 						}
 					}
@@ -276,7 +261,7 @@ namespace Reversi.Controls
 		public override void OnApplyTemplate ()
 		{
 			if (_Caption == null) {
-				_Caption = (Border)GetTemplateChild ("Caption");
+				_Caption = (Grid)GetTemplateChild ("Caption");
 			}
 			if (_CaptionGroup == null) {
 				_CaptionGroup = (Grid)GetTemplateChild ("CaptionGroup");
@@ -285,7 +270,7 @@ namespace Reversi.Controls
 				_CaptionLabel = (Grid)GetTemplateChild ("CaptionLabel");
 			}
 			if (_CaptionImage == null) {
-				_CaptionImage = (Grid)GetTemplateChild ("CaptionImage");
+				_CaptionImage = (Border)GetTemplateChild ("CaptionImage");
 			}
 			if (_Container == null) {
 				_Container = (Canvas)GetTemplateChild ("Container");

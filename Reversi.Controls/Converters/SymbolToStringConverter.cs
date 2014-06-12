@@ -446,11 +446,9 @@ namespace Reversi.Controls.Converters
 
 		public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var symbol = (SlipButtonSymbol)value;
-			if (_SymbolToStringMapping.ContainsKey (symbol)) {
-				return _SymbolToStringMapping[symbol];
-			}
-			throw new ArgumentException ();
+			return (value is SlipButtonSymbol)
+				? _SymbolToStringMapping[(SlipButtonSymbol)value]
+				: null;
 		}
 		public object ConvertBack (object value, Type targetType, object parameter, CultureInfo culture)
 		{

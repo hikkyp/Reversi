@@ -217,7 +217,7 @@ namespace Reversi.Controls
 
 		#endregion
 
-		public static readonly DependencyProperty SymbolSizeProperty = DependencyProperty.Register ("SymbolSize", typeof (double), typeof (SlipButton));
+		public static readonly DependencyProperty SymbolSizeProperty = DependencyProperty.Register ("SymbolSize", typeof (double), typeof (SlipButton), new FrameworkPropertyMetadata(20.0));
 		public static readonly DependencyProperty SymbolProperty = DependencyProperty.Register ("Symbol", typeof (SlipButtonSymbol), typeof (SlipButton));
 		public static readonly DependencyProperty SlipDirectionProperty = DependencyProperty.Register ("SlipDirection", typeof (SlipButtonSlipDirection), typeof (SlipButton), new UIPropertyMetadata (SlipButtonSlipDirection.LeftToRight));
 		public double SymbolSize

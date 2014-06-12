@@ -7,7 +7,9 @@ namespace Reversi.Controls.Converters
 	{
 		public object Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return ((string)value).ToUpper ();
+			return (value != null && value is string)
+				? ((string)value).ToUpper ()
+				: null;
 		}
 		public object ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{

@@ -57,8 +57,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\BoardSpaceState.cs" />
+    <Compile Include="ViewModels\GameClockViewModel.cs" />
+    <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="ViewModels\Player.cs" />
+    <Compile Include="Views\Board.xaml.cs">
+      <DependentUpon>Board.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BoardSpace.cs" />
+    <Compile Include="Views\GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Reversi.Controls\Reversi.Controls.csproj">
@@ -110,7 +123,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Board.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,21 +12,23 @@ namespace Reversi.Core
 		#region 非表示メンバ
 
 		private IList<IList<GameBoardSpaceState>> _SpaceStateMatrix;
+		private GameBoardSize _Size;
 
 		private GameBoard (IList<IList<GameBoardSpaceState>> spaceStateMatrix, GameBoardSize size)
 		{
-			Size = size; // 多分問題なし
 			_SpaceStateMatrix = spaceStateMatrix;
+			_Size = size;
 		}
 		private void _ResetSpaceStateMatrix ()
 		{
-			var halfWidth = Size.Width / 2;
-			var halfHeight = Size.Height / 2;
+			var halfWidth = _Size.Width / 2;
+			var halfHeight = _Size.Height / 2;
 			_SpaceStateMatrix[halfWidth - 1][halfHeight - 1] = GameBoardSpaceState.Black;
 			_SpaceStateMatrix[halfWidth][halfHeight] = GameBoardSpaceState.Black;
 			_SpaceStateMatrix[halfWidth - 1][halfHeight] = GameBoardSpaceState.White;
 			_SpaceStateMatrix[halfWidth][halfHeight - 1] = GameBoardSpaceState.White;
 		}
+
 		private IEnumerable<GameBoardSpaceState> _GetSpaceStatesInDirection (GameBoardSpace startSpace, GameBoardCaptureDirection captureDirection)
 		{
 			var x = startSpace.X + captureDirection.X;
@@ -37,7 +39,13 @@ namespace Reversi.Core
 				y += captureDirection.Y;
 			}
 		}
-
+		internal bool _GetIsGameOver ()
+		{
+			return
+				!HasEmptySpace ||
+				!GameBoardSpace.GetValidMoveSpaces (this, GamePlayer.Black).Any () &&
+				!GameBoardSpace.GetValidMoveSpaces (this, GamePlayer.White).Any ();
+		}
 		internal GameScore _GetScore ()
 		{
 			var size = Size;
@@ -56,13 +64,6 @@ namespace Reversi.Core
 				}
 			}
 			return new GameScore (blackScore, whiteScore);
-		}
-		internal bool _GetIsGameOver ()
-		{
-			return
-				!HasEmptySpace ||
-				!GameBoardSpace.GetValidMoveSpaces (this, GamePlayer.Black).Any () &&
-				!GameBoardSpace.GetValidMoveSpaces (this, GamePlayer.White).Any ();
 		}
 		internal GamePlayer _GetWinner (bool isGameOver)
 		{

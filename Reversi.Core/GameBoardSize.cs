@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reversi.Core
 {
@@ -13,30 +9,64 @@ namespace Reversi.Core
 	{
 		#region 非表示メンバ
 
+		private int _Width;
+		private int _Height;
+
 		internal bool _Contains (int x, int y)
 		{
 			return
-				0 <= x && x < Width &&
-				0 <= y && y < Height;
+				(0 <= x && x < _Width) &&
+				(0 <= y && y < _Height);
 		}
 
 		#endregion
 
-		public int Width { get; private set; }
-		public int Height { get; private set; }
-		public int Area { get { return Width * Height; } }
-		public int ShorterSide { get { return Math.Min (Width, Height); } }
-		public int LongerSide { get { return Math.Max (Width, Height); } }
+		public const int DefaultWidth = 8;
+		public const int DefaultHeight = 8;
+		public int Width
+		{
+			get
+			{
+				return _Width;
+			}
+		}
+		public int Height
+		{
+			get
+			{
+				return _Height;
+			}
+		}
+		public int Area
+		{
+			get
+			{
+				return _Width * _Height;
+			}
+		}
+		public int ShorterSide
+		{
+			get
+			{
+				return Math.Min (_Width, _Height);
+			}
+		}
+		public int LongerSide
+		{
+			get
+			{
+				return Math.Max (_Width, _Height);
+			}
+		}
 
 		public GameBoardSize (int width, int height)
 		{
 			Contract.Assert (width >= 2);
 			Contract.Assert (height >= 2);
-
-			Width = width;
-			Height = height;
+			_Width = width;
+			_Height = height;
 		}
-		public GameBoardSize () : this (8, 8) { }
+		public GameBoardSize () : this (DefaultWidth, DefaultHeight) { }
 		public bool Contains (GameBoardSpace boardSpace)
 		{
 			return _Contains (boardSpace.X, boardSpace.Y);
@@ -48,10 +78,9 @@ namespace Reversi.Core
 		public override bool Equals (object obj)
 		{
 			var other = obj as GameBoardSize;
-			if (other != null) {
-				return Width == other.Width && Height == other.Height;
-			}
-			return false;
+			return
+				(other != null) &&
+				(Width == other.Width && Height == other.Height);
 		}
 		public override int GetHashCode ()
 		{

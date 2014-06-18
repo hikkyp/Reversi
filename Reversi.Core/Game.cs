@@ -87,7 +87,6 @@ namespace Reversi.Core
 			}
 		}
 
-
 		#endregion
 
 		public GameBoard Board { get; private set; }

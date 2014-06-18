@@ -47,6 +47,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarouselListBox.cs" />
+    <Compile Include="CarouselListBoxRotationOrientation.cs" />
     <Compile Include="Converters\StringUpperConverter.cs" />
     <Compile Include="Converters\SymbolToStringConverter.cs" />
     <Compile Include="SlipButtonSlipDirection.cs" />

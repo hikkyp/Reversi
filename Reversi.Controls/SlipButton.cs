@@ -88,7 +88,11 @@ namespace Reversi.Controls
 										}
 									case SlipButtonSlipDirection.LeftToRight: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionLeft, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionLeft, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseIn,
+												},
+											});
 											_Caption.BeginAnimation (Canvas.LeftProperty, doubleAnimation);
 											break;
 										}
@@ -98,7 +102,11 @@ namespace Reversi.Controls
 										}
 									case SlipButtonSlipDirection.RightToLeft: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseIn,
+												},
+											});
 											_Caption.BeginAnimation (Canvas.LeftProperty, doubleAnimation);
 											break;
 										}
@@ -115,7 +123,11 @@ namespace Reversi.Controls
 									switch (slipDirection) {
 									case SlipButtonSlipDirection.TopToBottom: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionTop, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionTop, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseIn,
+												},
+											});
 											_Caption.BeginAnimation (Canvas.TopProperty, doubleAnimation);
 											break;
 										}
@@ -125,7 +137,11 @@ namespace Reversi.Controls
 										}
 									case SlipButtonSlipDirection.BottomToTop: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseIn,
+												},
+											});
 											_Caption.BeginAnimation (Canvas.TopProperty, doubleAnimation);
 											break;
 										}
@@ -151,7 +167,11 @@ namespace Reversi.Controls
 										}
 									case SlipButtonSlipDirection.LeftToRight: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseOut,
+												},
+											});
 											Canvas.SetLeft (_Caption, 0);
 											break;
 										}
@@ -162,7 +182,11 @@ namespace Reversi.Controls
 										}
 									case SlipButtonSlipDirection.RightToLeft: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionLeft, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionLeft, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseOut,
+												},
+											});
 											Canvas.SetLeft (_Caption, captionLeft);
 											break;
 										}
@@ -179,7 +203,11 @@ namespace Reversi.Controls
 									switch (slipDirection) {
 									case SlipButtonSlipDirection.TopToBottom: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (0, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseOut,
+												},
+											});
 											Canvas.SetTop (_Caption, 0);
 											break;
 										}
@@ -190,7 +218,11 @@ namespace Reversi.Controls
 										}
 									case SlipButtonSlipDirection.BottomToTop: {
 											doubleAnimation.KeyFrames.Clear ();
-											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionTop, KeyTime.FromPercent (1)));
+											doubleAnimation.KeyFrames.Add (new EasingDoubleKeyFrame (captionTop, KeyTime.FromPercent (1)) {
+												EasingFunction = new QuadraticEase {
+													EasingMode = EasingMode.EaseOut,
+												},
+											});
 											Canvas.SetTop (_Caption, captionTop);
 											break;
 										}
@@ -204,6 +236,7 @@ namespace Reversi.Controls
 								}
 
 							#endregion
+
 							}
 						}
 					}
@@ -217,9 +250,9 @@ namespace Reversi.Controls
 
 		#endregion
 
-		public static readonly DependencyProperty SymbolSizeProperty = DependencyProperty.Register ("SymbolSize", typeof (double), typeof (SlipButton), new FrameworkPropertyMetadata(20.0));
+		public static readonly DependencyProperty SymbolSizeProperty = DependencyProperty.Register ("SymbolSize", typeof (double), typeof (SlipButton), new PropertyMetadata(20.0));
 		public static readonly DependencyProperty SymbolProperty = DependencyProperty.Register ("Symbol", typeof (SlipButtonSymbol), typeof (SlipButton));
-		public static readonly DependencyProperty SlipDirectionProperty = DependencyProperty.Register ("SlipDirection", typeof (SlipButtonSlipDirection), typeof (SlipButton), new UIPropertyMetadata (SlipButtonSlipDirection.LeftToRight));
+		public static readonly DependencyProperty SlipDirectionProperty = DependencyProperty.Register ("SlipDirection", typeof (SlipButtonSlipDirection), typeof (SlipButton), new PropertyMetadata (SlipButtonSlipDirection.LeftToRight));
 		public double SymbolSize
 		{
 			get

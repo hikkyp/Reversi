@@ -87,23 +87,32 @@ namespace ConsoleApplication1
 				var gameController2 = new AiGameController (game, GamePlayer.White) { SearchDepth = searchDepths[random.Next (searchDepths.Count ())] };
 				while (!game.IsOver) {
 					Task<IList<GameBoardSpace>> thinkTask;
+					IList<GameBoardSpace> result;
 					var thinkTimer = Stopwatch.StartNew ();
 					int thinkDepth;
 					var player = game.CurrentPlayer;
 					if (player == GamePlayer.Black) {
+						Console.Write ("{0} thinking", player);
 						thinkDepth = gameController1.SearchDepth;
 						thinkTask = gameController1.MoveAsync (null);
+						while (!thinkTask.Wait (100)) {
+							Console.Write (".");
+						}
+						result = thinkTask.Result;
+						var thinkSpan = thinkTimer.ElapsedMilliseconds;
+						Console.WriteLine (" think time {0} ms (max depth {1})", thinkSpan, thinkDepth);
 					} else {
+						Console.Write ("{0} thinking", player);
 						thinkDepth = gameController2.SearchDepth;
 						thinkTask = gameController2.MoveAsync (null);
+						while (!thinkTask.Wait (100)) {
+							Console.Write (".");
+						}
+						result = thinkTask.Result;
+						var thinkSpan = thinkTimer.ElapsedMilliseconds;
+						Console.WriteLine (" think time {0} ms (max depth {1})", thinkSpan, thinkDepth);
 					}
-					Console.Write ("{0} thinking", player);
-					while (!thinkTask.Wait (100)) {
-						Console.Write (".");
-					}
-					var thinkSpan = thinkTimer.ElapsedMilliseconds;
-					Console.WriteLine (" think time {0} ms (max depth {1})", thinkSpan, thinkDepth);
-					_PrintBoard (game, thinkTask.Result);
+					_PrintBoard (game, result);
 				}
 				_PrintScore (game);
 			}

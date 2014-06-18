@@ -10,16 +10,30 @@ namespace Reversi.Core
 		#region 非表示メンバ
 
 		private static readonly Dictionary<GameBoardSize, IEnumerable<GameBoardSpace>> _AllSpaces = new Dictionary<GameBoardSize, IEnumerable<GameBoardSpace>> ();
+		private int _X;
+		private int _Y;
 
 		#endregion
 
-		public int X { get; private set; }
-		public int Y { get; private set; }
+		public int X
+		{
+			get
+			{
+				return _X;
+			}
+		}
+		public int Y
+		{
+			get
+			{
+				return _Y;
+			}
+		}
 
 		public GameBoardSpace (int x, int y)
 		{
-			X = x;
-			Y = y;
+			_X = x;
+			_Y = y;
 		}
 		public static IEnumerable<GameBoardSpace> GetMoveSpaces (GameBoardSize boardSize)
 		{
